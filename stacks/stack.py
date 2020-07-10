@@ -7,11 +7,12 @@ class Stack:
     Last In, First Out (LIFO).
     https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
     """
+
     def __init__(self):
         self.stack = []
         self._size = 0
 
-    def push(self,data):
+    def push(self, data):
         """
         Accepts an item as parameter and appends at the top of stack.
         Returns Nothing.
@@ -25,13 +26,16 @@ class Stack:
     def pop(self):
         """
         Removes the items present at the top of stack.
-        Returns Nothing
+        Returns the popped item.
 
         The runtime for this method is O(1) or constant time,
         because removing an item from the top happens in constant time.
         """
-        self.stack.pop()
-        self._size -=1
+        if self.stack:
+            self._size -= 1
+            return self.stack.pop()
+        else:
+            raise ValueError("Attempting to pop item from an empty Stack")
 
     def peek(self):
         """

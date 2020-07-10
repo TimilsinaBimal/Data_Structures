@@ -1,4 +1,4 @@
-from stack import Stack
+from .stack import Stack
 
 
 def reverse_string(my_string):
@@ -8,8 +8,7 @@ def reverse_string(my_string):
         stack.push(i)
     reversed_string = ''
     while(not stack.is_empty()):
-        reversed_string += stack.peek()
-        stack.pop()
+        reversed_string += stack.pop()
     return reversed_string
 
 
