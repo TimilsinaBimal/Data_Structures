@@ -8,9 +8,16 @@ class Stack:
     https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
     """
 
-    def __init__(self):
+    def __init__(self, limit=10):
         self.stack = []
         self._size = 0
+        self.limit = limit
+
+    def __bool__(self):
+        return bool(self.stack)
+
+    def __str__(self):
+        return str(self.stack)
 
     def push(self, data):
         """
@@ -20,6 +27,8 @@ class Stack:
         The runtime for this method is O(1) or constant time,
         because appending at the top of stack happens in constant time.
         """
+        if len(self.stack) >= self.limit:
+            raise StackOverflowError("Cannot insert item in full stack!")
         self.stack.append(data)
         self._size += 1
 
@@ -34,8 +43,7 @@ class Stack:
         if self.stack:
             self._size -= 1
             return self.stack.pop()
-        else:
-            raise ValueError("Attempting to pop item from an empty Stack")
+        raise StackUnderflowError("Cannot remove item from empty stack!")
 
     def peek(self):
         """
@@ -44,7 +52,9 @@ class Stack:
         The runtime of this method is O(1) or constant time,
         because searching the top of stack happens in constant time.
         """
-        return self.stack[self._size-1]
+        if self.stack:
+            return self.stack[self._size-1]
+        raise EmptyStackError("Cannot return top from empty stack!")
 
     def size(self):
         """
@@ -61,14 +71,37 @@ class Stack:
         """
         return not bool(self.stack)
 
+    def __contains__(self, item) -> bool:
+        """
+        Return if the item is in stack or not.
+
+        The runtime Complexity of this method is O(n) or linear time,
+        because searching a item in an array costs n time.
+        """
+        return item in self.stack
+
+
+class StackOverflowError(BaseException):
+    pass
+
+
+class StackUnderflowError(BaseException):
+    pass
+
+class EmptyStackError(BaseException):
+    pass
+
 
 if __name__ == "__main__":
     stack = Stack()
+    for i in range(10):
+        stack.push(i)
     print(stack.is_empty())
-    stack.push(10)
-    stack.push(20)
-    stack.push(30)
     stack.pop()
+    stack.push(10)
+    stack.pop()
+    stack.push(10)
     print(stack.peek())
     print(stack.is_empty())
     print(stack.size())
+    print(stack)
