@@ -1,7 +1,7 @@
 import sys
 sys.path.append('/Data_Structures/')
-from queue import QueueUnderflowError, QueueOverflowError
 from stacks.stack import Stack
+from queue import QueueUnderflowError, QueueOverflowError
 
 class StackQueue:
     """
@@ -18,20 +18,20 @@ class StackQueue:
             raise QueueOverflowError("Cannot insert item in a full queue.")
         self.stack_one.push(item)
 
+    def _move_item_to_second_stack(self):
+        if self.stack_two.is_empty():
+            while not self.stack_one.is_empty():
+                self.stack_two.push(self.stack_one.pop())
+
     def dequeue(self):
         if self.isEmpty():
             raise QueueUnderflowError(
                 "Cannot Remove an item from empty Queue.")
-
-        if self.stack_two.is_empty():
-            while not self.stack_one.is_empty():
-                self.stack_two.push(self.stack_one.pop())
+        self._move_item_to_second_stack()
         return self.stack_two.pop()
 
     def peek(self):
-        if self.stack_two.is_empty():
-            while not self.stack_one.is_empty():
-                self.stack_two.push(self.stack_one.pop())
+        self._move_item_to_second_stack()
         return self.stack_two.peek()
 
     def isEmpty(self):
