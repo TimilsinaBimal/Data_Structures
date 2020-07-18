@@ -38,7 +38,7 @@ class StackQueue:
         return self.stack_one.is_empty() and self.stack_two.is_empty()
 
     def isFull(self):
-        return self.stack_one.size() + self.stack_two.size() >= self.limit
+        return (self.stack_one.size() + self.stack_two.size()) >= self.limit
 
 
 if __name__ == "__main__":
