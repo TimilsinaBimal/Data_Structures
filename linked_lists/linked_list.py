@@ -94,6 +94,22 @@ class LinkedList:
         else:
             return -1
 
+    def remove(self, item):
+        index = self.indexOf(item)
+        if self.first:
+            previous = None
+            current = self.first
+            while current:
+                if current.value == item:
+                    previous.next = current.next
+                    self._size -= 1
+                    return current.value
+                else:
+                    previous = current
+                    current = current.next
+        else:
+            return -1
+
     def __contains__(self, item) -> bool:
         """
         Return if the item contains in list or not.
@@ -172,7 +188,8 @@ class LinkedList:
         if not self.first:
             raise EmptyListError("Cannot Search element in empty list.")
         if k > self.size():
-            raise IndexError("K cannot be greater than the size of linked list.")
+            raise IndexError(
+                "K cannot be greater than the size of linked list.")
         _last = self.first
         previous = self.first
 
@@ -187,6 +204,7 @@ class LinkedList:
 class EmptyListError(BaseException):
     pass
 
+
 if __name__ == "__main__":
     llist = LinkedList()
     print(llist.isEmpty())
@@ -198,6 +216,7 @@ if __name__ == "__main__":
     llist.removeLast()
     llist.addLast(40)
     llist.addLast(50)
+    llist.remove(20)
     print(llist.getKthNodeFromEnd(1))
     # llist.reverse()
     print(llist.isEmpty())
