@@ -35,9 +35,11 @@ class HashTable:
                 current_bucket = current_bucket.next
         self.table[index].addLast(KeyValue(key, value))
 
+    def _get_bucket(self,key):
+        return self.table[self._hash(key)]
+
     def get(self, key):
-        index = self._hash(key)
-        bucket = self.table[index]
+        bucket = self._get_bucket(key)
         if not bucket.isEmpty():
             current = bucket.first
             while current:
@@ -49,8 +51,7 @@ class HashTable:
             return KeyDoesnotExistError("The key you are passing doesnot exist.")
 
     def remove(self, key):
-        index = self._hash(key)
-        bucket = self.table[index]
+        bucket = self._get_bucket(key)
         if not bucket.isEmpty():
             previous = None
             current = bucket.first
