@@ -20,25 +20,19 @@ class PriorityQueue:
         """
         if self.is_full():
             raise QueueOverflowError("Cannot insert item in a full queue.")
+        idx = self._search_index_to_insert(item)
+        self.queue.insert(idx, item)
+
+    def _search_index_to_insert(self, item):
         size = len(self.queue)
         idx = 0
-        # Linear Search
-        # size -= 1
         while idx < size:
-            # Binary Searching
             mid = (idx + size)//2
             if item < self.queue[mid]:
                 size = mid
             else:
                 idx = mid+1
-
-            # Linear Searching
-            # if item < self.queue[size]:
-            #     size = size-1
-            # else:
-            #     idx = size+1
-
-        self.queue.insert(idx, item)
+        return idx
 
     def dequeue(self):
         """
